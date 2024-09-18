@@ -1,42 +1,45 @@
-function sorteardor_de_valores(){
-    
-    lista_numeros = []
+function sorteador_de_numeros(){
 
-    let quantidade = parseInt(document.getElementById("quantidade").value)
-    let inicio = parseInt(document.getElementById("de").value)
-    let limite = parseInt(document.getElementById("ate").value)
+    lista_numeros_sorteados = []
+
+    let quantidade_numeros = parseInt(document.getElementById("quantidade").value)
+    let inicio_numeros = parseInt(document.getElementById("de").value)
+    let limite_numeros = parseInt(document.getElementById("ate").value)
 
     let i = 0
 
-    if(!isNaN(quantidade) && !isNaN(inicio) && !isNaN(limite) && inicio < limite && (limite - inicio) + 1 > quantidade){
+    if(!isNaN(quantidade_numeros) && !isNaN(inicio_numeros) && !isNaN(limite_numeros) && (limite_numeros - inicio_numeros) + 1 > quantidade_numeros){
+        while(i < quantidade_numeros){
 
-        while(i < quantidade){
-
-            let numero_sorteado = obter_numero_aleatorio(limite, inicio)
+            numero_sorteado = sortear_numero(limite_numeros, inicio_numeros)
     
-            if (!lista_numeros.includes(numero_sorteado)){
-                lista_numeros.push(numero_sorteado)
+            if(!lista_numeros_sorteados.includes(numero_sorteado)){
+                lista_numeros_sorteados.push(numero_sorteado)
                 i++
             }
+    
         }
     
-        let texto = document.getElementById("resultado")
-        texto.innerHTML = `Números sorteados: ${lista_numeros}`
-    
-        alterar_status_botao()
-
+        alterar_texto(`Números sorteados: ${lista_numeros_sorteados}`)
+        alterar_botao()
     } else{
-        let texto = document.getElementById("resultado")
-        texto.innerHTML = `Números inválidos!`
+        alterar_texto("Insira as informações corretamente!")
     }
+
     
+
 }
 
-function obter_numero_aleatorio(max, min){
-    return Math.round(Math.random() * (max - min) + min)
+function alterar_texto(mensagem){
+    texto = document.getElementById("resultado")
+    texto.innerHTML = mensagem
 }
 
-function alterar_status_botao(){
+function sortear_numero(max, min){
+    return Math.round(Math.random() * (max - min) + min )
+}
+
+function alterar_botao(){
     let botao = document.getElementById("btn-reiniciar")
     if(botao.classList.contains("container__botao-desabilitado")){
         botao.classList.remove("container__botao-desabilitado")
@@ -48,9 +51,11 @@ function alterar_status_botao(){
 }
 
 function reiniciar_jogo(){
-    alterar_status_botao()
-    let quantidade = document.getElementById("quantidade").value = ""
-    let inicio = document.getElementById("de").value = ""
-    let limite = document.getElementById("ate").value = ""
-    document.getElementById("resultado").innerHTML = "Números sorteados:  nenhum até agora"
-} 
+    alterar_botao()
+
+    let quantidade_numeros = document.getElementById("quantidade").value = ""
+    let inicio_numeros = document.getElementById("de").value = ""
+    let limite_numeros = document.getElementById("ate").value = ""
+
+    alterar_texto("Números sorteados:  nenhum até agora")
+}
